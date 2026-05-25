@@ -17,6 +17,7 @@ public enum CardState
 }
 public class Card : MonoBehaviour
 {
+    public int id;//卡片ID
     public CardState state;
     // 定义这三张图片
     public Button ready;
@@ -28,6 +29,7 @@ public class Card : MonoBehaviour
     //定义CD时间
     public float CD;
     public int needSun;
+    public UIRoot uiRoot;
     // Start is called before the first frame update
     void Start()
     {
@@ -38,19 +40,16 @@ public class Card : MonoBehaviour
     }
     private void OnclickedReady()
     {
-        print("点击了这个按钮");
-        //如果当前状态是阳光充足
-        if (state == CardState.Ready)
-        {
-            //状态切换到CD
-            state = CardState.CD;
-            //阳光扣除
-            GameData.sunPoint -= needSun;
-            //计时器重置
-            timer = 0;
-        }
-        //
+        //让currentPlant显示在UI上
+        uiRoot.currentPlant.gameObject.SetActive(true);
+        //让这个卡片附上对应的精灵图
+        uiRoot.currentPlant.sprite = GetComponent<Image>().sprite;
+        //动态加载(Assets/Resources/Card/0.png)
+        uiRoot.currentPlant.sprite = Resources.Load<Sprite>("Card/" + id); 
+
     }
+
+
 
     // Update is called once per frame
     void Update()
