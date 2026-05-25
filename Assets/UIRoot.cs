@@ -1,4 +1,4 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,5 +20,14 @@ public class UIRoot : MonoBehaviour
     {
         sunPointTxt.text = GameData.sunPoint.ToString();
         currentPlant.transform.position = Input.mousePosition;//让currentPlant跟随鼠标移动
+        //如果等于-1，图片隐藏
+        if(GameData.currentPlantId == -1)
+        {
+            currentPlant.gameObject.SetActive(false);
+        }
+        if(Input.GetMouseButtonDown(1))
+        {
+            GameData.currentPlantId = -1;
+        }
     }
 }

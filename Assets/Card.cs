@@ -40,12 +40,14 @@ public class Card : MonoBehaviour
     }
     private void OnclickedReady()
     {
+        print("点击了卡片");
         //让currentPlant显示在UI上
         uiRoot.currentPlant.gameObject.SetActive(true);
         //让这个卡片附上对应的精灵图
-        uiRoot.currentPlant.sprite = GetComponent<Image>().sprite;
-        //动态加载(Assets/Resources/Card/0.png)
         uiRoot.currentPlant.sprite = Resources.Load<Sprite>("Card/" + id); 
+        GameData.currentPlantId = id;//把当前选中的植物id赋值给GameData
+        
+        
 
     }
 
@@ -54,7 +56,7 @@ public class Card : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       switch (state)
+        switch (state)
         {
             case CardState.CD:
                 ready.gameObject.SetActive(true);
@@ -87,6 +89,10 @@ public class Card : MonoBehaviour
                 ready.gameObject.SetActive(true);
                 NoSun.gameObject.SetActive(false);
                 cdImg.gameObject.SetActive(false);
+                if(GameData.sunPoint < needSun)
+                {
+                    state = CardState.NoSun;
+                }
                 break;
         }
     }
